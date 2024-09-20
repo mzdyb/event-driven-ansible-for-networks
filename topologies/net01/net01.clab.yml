@@ -1,0 +1,29 @@
+name: net1
+
+mgmt:
+  network: net1
+  ipv4-subnet: 172.100.21.0/24
+
+topology:
+  nodes:
+    net1-rtr1:
+      kind: arista_ceos
+      image: ceos:4.32.0F 
+      mgmt-ipv4: 172.100.21.2
+
+    net1-rtr2:
+      kind: arista_ceos
+      image: ceos:4.32.0F
+      mgmt-ipv4: 172.100.21.3
+
+    net1-client1:
+      kind: linux
+      image: wbitt/network-multitool:fedora
+      mgmt-ipv4: 172.100.21.4
+      exec:
+        - ip addr add 192.168.1.2/24 dev eth1
+        - ip route add 192.168.2.0/24 via 192.168.1.1
+
+  links:
+    - endpoints: ["net1-rtr1:eth1", "net1-rtr2:eth1"]
+    - endpoints: ["net1-rtr1:eth2", "net1-client1:eth1"]

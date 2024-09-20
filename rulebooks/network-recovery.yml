@@ -1,0 +1,23 @@
+---
+- name: Automatic network issues recovery
+  hosts: all
+  sources:
+    - ansible.eda.kafka:
+        host: 192.168.122.110
+        port: 9092
+        topic: arista_events
+
+  rules:
+    - name: Interface recovery
+      condition: event.fields.oper_status == "DOWN"
+      action:
+        # run_job_template:
+        #   name: "Network EDA - interface recovery"
+        #   job_args:
+        #     extra_vars:
+        #       interface: "{{ event.name }}"
+      action:
+        run_playbook:
+          name: ../playbooks/interface_recovery.yml
+          extra_vars:
+            interface: "{{ event.name }}"

@@ -1,0 +1,8 @@
+---
+- name: Configure network devices from SoT
+  hosts: net01
+  gather_facts: false
+
+  roles:
+    - set_sot_variables
+    - apply_configuration_from_sot

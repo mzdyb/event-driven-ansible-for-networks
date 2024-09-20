@@ -1,0 +1,20 @@
+---
+ungrouped:
+  hosts:
+    labhost:
+      ansible_host: 192.168.122.110
+      ansible_user: ansible
+      ansible_password: redhat # clear text for demo purposes, passwords should be encrypted with ansible-vault encrypt-string command
+      ansible_become_password: redhat
+net01:
+  hosts:
+    net01-rtr1:
+      ansible_host: 172.100.21.2
+    net01-rtr2:
+      ansible_host: 172.100.21.3
+  vars:
+    ansible_network_os: arista.eos.eos
+    ansible_connection: ansible.netcommon.network_cli
+    ansible_user: admin
+    ansible_become: true
+    ansible_become_method: enable

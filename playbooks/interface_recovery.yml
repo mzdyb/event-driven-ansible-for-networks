@@ -1,0 +1,34 @@
+---
+- name: Recover interface on Arista switch
+  hosts: net01-rtr1
+  vars:
+    interface: Ethernet2
+
+  tasks:
+    - name: Shut down interface
+      arista.eos.eos_config:
+        lines:
+          - shutdown
+        parents: interface {{ interface }}
+
+    - name: Enable interface
+      arista.eos.eos_config:
+        lines: no shutdown
+        parents: interface {{ interface }}
+
+    - name: Check interface status
+      arista.eos.eos_command:
+        commands:
+          - command: show ip interface {{ interface }} brief
+            output: json
+      register: interface_status
+
+    - name: Show interface status
+      ansible.builtin.debug:
+        var: interface_status.stdout_lines[0].interfaces.{{ interface }}
+
+    - name: Verify if interface recovered
+      ansible.builtin.assert:
+        that: interface_status.stdout_lines[0].interfaces.{{ interface }}.lineProtocolStatus == "up"
+        fail_msg: "Interface {{ interface }} recovery failed"
+        success_msg: "Interface {{ interface }} recovered successfully"
