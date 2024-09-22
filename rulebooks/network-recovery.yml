@@ -2,7 +2,7 @@
 - name: Automatic network issues recovery
   hosts: all
   sources:
-    - ansible.eda.kafka:
+    - kafka:
         host: 192.168.122.110
         port: 9092
         topic: arista_events
