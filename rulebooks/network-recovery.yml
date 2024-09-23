@@ -19,4 +19,4 @@
           name: "Network EDA - interface recovery"
           job_args:
             extra_vars:
-              interface: "{{ event.name }}"
+              interface: "{{ event.body.name }}"
