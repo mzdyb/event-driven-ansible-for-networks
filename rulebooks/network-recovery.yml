@@ -9,14 +9,14 @@
 
   rules:
     - name: Interface recovery
-      condition: true
-      action:
-        debug:
-          msg: "Received event: {{ event }}"
-      # condition: event.fields.oper_status == "DOWN"
+      # condition: true
       # action:
-        # run_job_template:
-        #   name: "Network EDA - interface recovery"
-        #   job_args:
-        #     extra_vars:
-        #       interface: "{{ event.name }}"
+      #   debug:
+      #     msg: "Received event: {{ event }}"
+      condition: event.body.fields.oper_status == "DOWN"
+      action:
+        run_job_template:
+          name: "Network EDA - interface recovery"
+          job_args:
+            extra_vars:
+              interface: "{{ event.name }}"
