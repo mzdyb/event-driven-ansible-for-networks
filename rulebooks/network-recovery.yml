@@ -19,6 +19,7 @@
         #   msg: "{{ event.body.name }}"
         run_job_template:
           name: "Network EDA - interface recovery"
+          organization: Default
           job_args:
             extra_vars:
               interface: "{{ event.body.name }}"
