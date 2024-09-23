@@ -15,10 +15,10 @@
       #     msg: "Received event: {{ event }}"
       condition: event.body.fields.oper_status == "DOWN"
       action:
-        debug:
-          msg: "{{ event.body.name }}"
-        # run_job_template:
-        #   name: "Network EDA - interface recovery"
-        #   job_args:
-        #     extra_vars:
-        #       interface: "{{ event.body.name }}"
+        # debug:
+        #   msg: "{{ event.body.name }}"
+        run_job_template:
+          name: "Network EDA - interface recovery"
+          job_args:
+            extra_vars:
+              interface: "{{ event.body.name }}"
