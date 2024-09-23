@@ -9,14 +9,8 @@
 
   rules:
     - name: Interface recovery
-      # condition: true
-      # action:
-      #   debug:
-      #     msg: "Received event: {{ event }}"
       condition: event.body.fields.oper_status == "DOWN"
       action:
-        # debug:
-        #   msg: "{{ event.body.name }}"
         run_job_template:
           name: "Network EDA - interface recovery"
           organization: Default
