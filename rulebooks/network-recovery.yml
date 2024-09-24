@@ -9,7 +9,7 @@
 
   rules:
     - name: Interface recovery
-      condition: event.values["/interfaces/interface/state/oper-status"] == "DOWN"
+      condition: event[0].values["/interfaces/interface/state/oper-status"] == "DOWN"
       action:
         run_job_template:
           name: "Network EDA - interface recovery"
