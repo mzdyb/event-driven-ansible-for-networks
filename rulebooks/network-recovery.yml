@@ -27,5 +27,5 @@
           organization: Default
           job_args:
             extra_vars:
-              config_template: "topologies/net01/{{ event.body[0].tags.source }}/templates/partial/bgp.j2"
+              config_template: "../topologies/net01/{{ event.body[0].tags.source }}/templates/partial/bgp.j2"
               device: "{{ event.body[0].tags.source }}"
