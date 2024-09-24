@@ -9,15 +9,17 @@
 
   rules:
     - name: Interface recovery
-      condition: event[0].values["/interfaces/interface/state/oper-status"] == "DOWN"
+      # condition: event.values["/interfaces/interface/state/oper-status"] == "DOWN"
+      condition: true
       action:
-        run_job_template:
-          name: "Network EDA - interface recovery"
-          organization: Default
-          job_args:
-            extra_vars:
-              interface: "{{ event.tags.interface_name }}"
-              device: "{{ event.tags.source }}"
+        debug:
+        # run_job_template:
+        #   name: "Network EDA - interface recovery"
+        #   organization: Default
+        #   job_args:
+        #     extra_vars:
+        #       interface: "{{ event.tags.interface_name }}"
+        #       device: "{{ event.tags.source }}"
 
     # - name: Protect network configuration
     #   condition: event.body.fields.oper_status == "DOWN"
