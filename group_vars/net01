@@ -1,5 +1,5 @@
 ---
 infra_path: "../topologies/net01"
 topology_file: "{{ infra_path }}/net01.clab.yml"
-config_template: "{{ infra_path }}/{{ inventory_hostname }}/templates/{{ inventory_hostname }}.j2"
+# config_template: "{{ infra_path }}/{{ inventory_hostname }}/templates/{{ inventory_hostname }}.j2"
 config_vars: "{{ infra_path }}/{{ inventory_hostname }}/config_vars"
