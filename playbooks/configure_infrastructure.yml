@@ -4,8 +4,8 @@
   gather_facts: false
 
   roles:
-    - set_sot_variables
-    - apply_configuration_from_sot
+    - ../roles/set_sot_variables
+    - ../roles/apply_configuration_from_sot
   
   tasks:
     debug: var=config_template
