@@ -3,5 +3,5 @@
   ansible.builtin.include_vars:
     file: "{{ item }}"
   with_fileglob:
-    - topologies/net01/{{ inventory_hostname }}/config_vars/*
+    - ../topologies/net01/{{ inventory_hostname }}/config_vars/*
   register: results
