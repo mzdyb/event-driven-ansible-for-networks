@@ -19,25 +19,13 @@
               interface: "{{ event.body[0].tags.interface_name }}"
               device: "{{ event.body[0].tags.source }}"
 
-    - name: Protect network configuration
+    - name: Protect bgp network prefix configuration
       condition: event.body[0].name == "bgp_network_prefix_configuration_change"
       action:
-        debug:
-        # run_job_template:
-        #   name: "Network EDA - protect network configuration"
-        #   organization: Default
-        #   job_args:
-        #     extra_vars:
-        #       interface: "{{ event.body.tags.name }}"
-
-
-
-    # - name: Protect network configuration
-    #   condition: event.body.fields.oper_status == "DOWN"
-    #   action:
-    #     run_job_template:
-    #       name: "Network EDA - protect network configuration"
-    #       organization: Default
-    #       job_args:
-    #         extra_vars:
-    #           interface: "{{ event.body.tags.name }}"
+        run_job_template:
+          name: "Network EDA - protect bgp network prefix configuration"
+          organization: Default
+          job_args:
+            extra_vars:
+              config_template: "topologies/net01/{{ event.body[0].tags.source }}/templates/partial/bgp.j2"
+              device: "{{ event.body[0].tags.source }}"
