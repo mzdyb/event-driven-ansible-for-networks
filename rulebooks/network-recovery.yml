@@ -19,36 +19,18 @@
               interface: "{{ event.body[0].tags.interface_name }}"
               device: "{{ event.body[0].tags.source }}"
 
-    # - name: Protect network configuration
-    #   condition: event.body.fields.oper_status == "DOWN"
-    #   action:
-    #     run_job_template:
-    #       name: "Network EDA - protect network configuration"
-    #       organization: Default
-    #       job_args:
-    #         extra_vars:
-    #           interface: "{{ event.body.tags.name }}"
+    - name: Protect network configuration
+      condition: event.body[0].name == "bgp_network_prefix_configuration_change"
+      action:
+        debug:
+        # run_job_template:
+        #   name: "Network EDA - protect network configuration"
+        #   organization: Default
+        #   job_args:
+        #     extra_vars:
+        #       interface: "{{ event.body.tags.name }}"
 
 
-
-
-
-
-
-
-
-
-
-
-    # - name: Interface recovery
-    #   condition: event.body.fields.oper_status == "DOWN"
-    #   action:
-    #     run_job_template:
-    #       name: "Network EDA - interface recovery"
-    #       organization: Default
-    #       job_args:
-    #         extra_vars:
-    #           interface: "{{ event.body.tags.name }}"
 
     # - name: Protect network configuration
     #   condition: event.body.fields.oper_status == "DOWN"
