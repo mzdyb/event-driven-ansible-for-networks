@@ -2,8 +2,6 @@
 - name: Configure network devices from SoT
   hosts: net01
   gather_facts: false
-  vars:
-    config_template: abcd.j2
 
   # roles:
   #   - ../roles/set_sot_variables
