@@ -9,3 +9,5 @@
 
   tasks:
     - debug: var=config_template
+
+    - debug: var=hostvars[inventory_hostname]
