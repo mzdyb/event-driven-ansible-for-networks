@@ -10,4 +10,4 @@
   tasks:
     - debug:
         msg:
-          - "{{ device }}"
+          - "{{ config_template }}"
