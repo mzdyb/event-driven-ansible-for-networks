@@ -10,6 +10,5 @@
   tasks:
     - debug:
         msg:
-          - "{{ config_template1 }}"
-          # - "{{ ansible_eda.event }}"
-          - "{{ device }}"
+          - "{{ config_template }}"
+
