@@ -16,5 +16,5 @@
 
 - name: Show configuration changes
   ansible.builtin.debug:
-    msg: "{{ config_output.diff }}"
+    msg: "{{ config_output }}"
   listen: show configuration changes
