@@ -12,4 +12,4 @@
         msg:
           # - "{{ config_template1 }}"
           # - "{{ ansible_eda.event }}"
-          - "{{ hostvars[inventory_hostname] }}"
+          - "{{ device }}"
