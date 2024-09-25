@@ -1,14 +1,14 @@
 ---
-- name: Backup running config before changes
-  arista.eos.eos_config:
-    backup: true
-    backup_options:
-      dir_path: /tmp/backups/{{ inventory_hostname }}/pre_changes
+# - name: Backup running config before changes
+#   arista.eos.eos_config:
+#     backup: true
+#     backup_options:
+#       dir_path: /tmp/backups/{{ inventory_hostname }}/pre_changes
 
 - name: Apply configuration from SoT
   arista.eos.eos_config:
     src: "{{ config_template }}"
-    replace: config
+    replace: block
     save_when: modified
   register: config_output
   notify:
