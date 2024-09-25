@@ -10,4 +10,4 @@
   tasks:
     - debug:
         msg:
-          - "config_template1: {{ config_template }}"
+          - "{{ config_template1 }}"
