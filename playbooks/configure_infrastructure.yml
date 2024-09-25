@@ -11,4 +11,4 @@
     - debug:
         msg:
           # - "{{ config_template1 }}"
-          - "{{ ansible_eda.device }}"
+          - "{{ ansible_eda.event }}"
