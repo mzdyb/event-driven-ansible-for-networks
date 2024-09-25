@@ -14,4 +14,3 @@
           - "inventory_hostname: {{ inventory_hostname }}"
           - "config_template: {{ config_template }}"
 
-    # - debug: var=hostvars[inventory_hostname]
