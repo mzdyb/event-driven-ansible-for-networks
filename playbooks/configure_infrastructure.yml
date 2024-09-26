@@ -6,4 +6,3 @@
   roles:
     - ../roles/set_sot_variables
     - ../roles/apply_configuration_from_sot
-

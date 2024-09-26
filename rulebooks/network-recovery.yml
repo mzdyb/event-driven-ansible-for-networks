@@ -19,11 +19,11 @@
               interface: "{{ event.body[0].tags.interface_name }}"
               device: "{{ event.body[0].tags.source }}"
 
-    - name: Protect bgp network prefix configuration
+    - name: Enforce bgp network prefix configuration
       condition: event.body[0].name == "bgp_network_prefix_configuration_change"
       action:
         run_job_template:
-          name: "Network EDA - protect bgp network prefix configuration"
+          name: "Network EDA - enforce bgp network prefix configuration"
           organization: Default
           job_args:
             extra_vars:
