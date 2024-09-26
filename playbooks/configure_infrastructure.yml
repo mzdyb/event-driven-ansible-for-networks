@@ -3,6 +3,10 @@
   hosts: "{{ device }}"
   gather_facts: false
 
-  roles:
-    - ../roles/set_sot_variables
-    - ../roles/apply_configuration_from_sot
+  # roles:
+  #   - ../roles/set_sot_variables
+  #   - ../roles/apply_configuration_from_sot
+
+
+  tasks:
+    - debug: var=config_template
