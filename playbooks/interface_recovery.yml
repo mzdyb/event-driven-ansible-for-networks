@@ -1,6 +1,6 @@
 ---
 - name: Recover interface on Arista switch
-  hosts: net01-rtr1
+  hosts: "{{ device }}"
   vars:
     interface: Ethernet2
 

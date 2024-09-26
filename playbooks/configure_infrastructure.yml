@@ -1,6 +1,6 @@
 ---
 - name: Configure network devices from SoT
-  hosts: net01
+  hosts: "{{ device }}"
   gather_facts: false
 
   roles:
