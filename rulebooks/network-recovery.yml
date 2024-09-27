@@ -13,7 +13,7 @@
         any:
           - event.body[0].values["/network-instances/network-instance/protocols/protocol/bgp/global/networks/network/config/network"] is defined 
           # - event.body[0].deletes[0] is defined and event.body[0].deletes[0] == "/network-instances/network-instance/protocols/protocol/bgp/global/networks"
-          - event.body[0].deletes[0] == "/network-instances/network-instance/protocols/protocol/bgp/global/networks"
+          - event.body[0].deletes[0] is defined and event.body[0].deletes[0] == "/network-instances/network-instance/protocols/protocol/bgp/global/networks"
       action:
         debug: 
           msg: "{{ event }}"
