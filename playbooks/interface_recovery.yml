@@ -1,15 +1,13 @@
 ---
 - name: Recover interface on Arista switch
   hosts: "{{ device }}"
-  vars:
-    interface: Ethernet2
 
   tasks:
-    - name: Shut down interface
-      arista.eos.eos_config:
-        lines:
-          - shutdown
-        parents: interface {{ interface }}
+    # - name: Shut down interface
+    #   arista.eos.eos_config:
+    #     lines:
+    #       - shutdown
+    #     parents: interface {{ interface }}
 
     - name: Enable interface
       arista.eos.eos_config:
