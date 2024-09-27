@@ -21,7 +21,10 @@
 
     - name: Enforce bgp network prefix configuration
       # condition: event.body[0].name == "bgp_network_prefix_configuration_change"
-      condition: event.body[0].values["/network-instances/network-instance/protocols/protocol/bgp/global/networks/network/config/network"] is defined
+      condition: 
+        any: 
+          - event.body[0].values["/network-instances/network-instance/protocols/protocol/bgp/global/networks/network/config/network"] is defined
+          - event.body[0].deletes[0] == "/network-instances/network-instance/protocols/protocol/bgp/global/networks"
       action:
         run_job_template:
           name: "Network EDA - enforce bgp network prefix configuration"
