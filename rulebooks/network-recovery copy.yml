@@ -20,15 +20,13 @@
               device: "{{ event.body[0].tags.source }}"
 
     - name: Enforce bgp network prefix configuration
-      condition: event.body[0].values["/network-instances/network-instance/protocols/protocol/bgp/global/networks/network/config/network"] is defined
-        # any: 
-          # - event.body[0].deletes[0] is defined and event.body[0].deletes[0] == "/network-instances/network-instance/protocols/protocol/bgp/global/networks"
-          # - event.body[0].deletes[0] == "/network-instances/network-instance/protocols/protocol/bgp/global/networks"
+      condition: >
+        event.body[0].values["/network-instances/network-instance/protocols/protocol/bgp/global/networks/network/config/network"] is defined or 
+        event.body[0].deletes[0] == "/network-instances/network-instance/protocols/protocol/bgp/global/networks/network"
       action:
-        debug: 
-        # run_job_template:
-        #   name: "Network EDA - enforce bgp network prefix configuration"
-        #   organization: Default
-        #   job_args:
-        #     extra_vars:
-        #       device: "{{ event.body[0].tags.source }}"
+        run_job_template:
+          name: "Network EDA - enforce bgp network prefix configuration"
+          organization: Default
+          job_args:
+            extra_vars:
+              device: "{{ event.body[0].tags.source }}"
