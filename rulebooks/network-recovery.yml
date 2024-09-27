@@ -9,20 +9,15 @@
 
   rules:
     - name: Enforce bgp network prefix configuration
-      condition:
-        any:
-          - event.body[0].values["/network-instances/network-instance/protocols/protocol/bgp/global/networks/network/config/network"] is defined 
+      condition: (event.body[0].values["/network-instances/network-instance/protocols/protocol/bgp/global/networks/network/config/network"] is defined) or (event.body[0].deletes[0] == "/network-instances/network-instance/protocols/protocol/bgp/global/networks/network")
+        # any:
+        #   - event.body[0].values["/network-instances/network-instance/protocols/protocol/bgp/global/networks/network/config/network"] is defined 
           # - event.body[0].deletes[0] is defined and event.body[0].deletes[0] == "/network-instances/network-instance/protocols/protocol/bgp/global/networks"
           # - event.body[0].deletes[0] is defined
-          - event.body[0].deletes[0] == "/network-instances/network-instance/protocols/protocol/bgp/global/networks/network"
+          # - event.body[0].deletes[0] == "/network-instances/network-instance/protocols/protocol/bgp/global/networks/network"
       action:
-        run_module:
-          name: debug
-          module_args:
-            msg: "Triggered event: {{ event }}"
-
-        # debug: 
-        #   msg: "{{ event }}"
+        debug: 
+          msg: "{{ event }}"
         # run_job_template:
         #   name: "Network EDA - enforce bgp network prefix configuration"
         #   organization: Default
