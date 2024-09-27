@@ -9,6 +9,10 @@
           - shutdown
         parents: interface {{ interface }}
 
+    - name: Pause for 5 seconds
+      ansible.builtin.pause:
+        seconds: 5
+
     - name: Enable interface
       arista.eos.eos_config:
         lines: no shutdown
