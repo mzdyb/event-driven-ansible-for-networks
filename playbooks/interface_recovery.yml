@@ -25,7 +25,7 @@
 
     - name: Show interface status
       ansible.builtin.debug:
-        var: interface_status.stdout_lines[0].interfaces.{{ interface }}
+        var: interface_status #.stdout_lines[0].interfaces.{{ interface }}
 
     - name: Verify if interface recovered
       ansible.builtin.assert:
