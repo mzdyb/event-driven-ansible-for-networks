@@ -27,7 +27,8 @@
           # - event.body[0].deletes[0] is defined and event.body[0].deletes[0] == "/network-instances/network-instance/protocols/protocol/bgp/global/networks"
           # - event.body[0].deletes[0] == "/network-instances/network-instance/protocols/protocol/bgp/global/networks"
       action:
-        debug:
+        debug: 
+          msg: "{{ event }}"
         # run_job_template:
         #   name: "Network EDA - enforce bgp network prefix configuration"
         #   organization: Default
