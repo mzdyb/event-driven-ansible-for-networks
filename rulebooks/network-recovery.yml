@@ -12,3 +12,4 @@
       condition: true
       action:
         debug:
+          msg: "{{ event }}"
