@@ -4,12 +4,6 @@
   gather_facts: false
   
 
-  # roles:
-  #   - ../roles/set_sot_variables
-  #   - ../roles/apply_configuration_from_sot
-
-
-  tasks:
-    - debug: var=hostvars[inventory_hostname]
-
-    - debug: var=config_template
+  roles:
+    - ../roles/set_sot_variables
+    - ../roles/apply_configuration_from_sot
