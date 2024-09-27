@@ -21,7 +21,7 @@
 
     - name: Enforce bgp network prefix configuration
       # condition: event.body[0].name == "bgp_network_prefix_configuration_change"
-      condition: true
+      condition: event is defined
         # any: 
           # - event.body[0].values["/network-instances/network-instance/protocols/protocol/bgp/global/networks/network/config/network"] is defined
           # - event.body[0].deletes[0] is defined and event.body[0].deletes[0] == "/network-instances/network-instance/protocols/protocol/bgp/global/networks"
