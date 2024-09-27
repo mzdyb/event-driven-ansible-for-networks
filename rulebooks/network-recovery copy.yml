@@ -1,0 +1,34 @@
+---
+- name: Automatic network issues recovery
+  hosts: all
+  sources:
+    - ansible.eda.kafka:
+        host: 192.168.122.110
+        port: 9092
+        topic: network-events
+
+  rules:
+    - name: Interface recovery
+      condition: event.body[0].values["/interfaces/interface/state/oper-status"] == "DOWN"
+      action:
+        run_job_template:
+          name: "Network EDA - interface recovery"
+          organization: Default
+          job_args:
+            extra_vars:
+              interface: "{{ event.body[0].tags.interface_name }}"
+              device: "{{ event.body[0].tags.source }}"
+
+    - name: Enforce bgp network prefix configuration
+      condition: event.body[0].values["/network-instances/network-instance/protocols/protocol/bgp/global/networks/network/config/network"] is defined
+        # any: 
+          # - event.body[0].deletes[0] is defined and event.body[0].deletes[0] == "/network-instances/network-instance/protocols/protocol/bgp/global/networks"
+          # - event.body[0].deletes[0] == "/network-instances/network-instance/protocols/protocol/bgp/global/networks"
+      action:
+        debug: 
+        # run_job_template:
+        #   name: "Network EDA - enforce bgp network prefix configuration"
+        #   organization: Default
+        #   job_args:
+        #     extra_vars:
+        #       device: "{{ event.body[0].tags.source }}"
