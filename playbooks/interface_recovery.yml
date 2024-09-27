@@ -29,6 +29,6 @@
 
     - name: Verify if interface recovered
       ansible.builtin.assert:
-        that: interface_status.stdout_lines[0].interfaces.{{ interface }}.lineProtocolStatus == "up"
+        that: interface_status.stdout_lines[0].interfaces[interface].lineProtocolStatus == "up"
         fail_msg: "Interface {{ interface }} recovery failed"
         success_msg: "Interface {{ interface }} recovered successfully"
