@@ -2,6 +2,9 @@
 - name: Configure network devices from SoT
   hosts: net01
   gather_facts: false
+  vars: 
+    config_template: test
+   
 
   # roles:
   #   - ../roles/set_sot_variables
