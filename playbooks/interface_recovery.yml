@@ -9,10 +9,10 @@
           - shutdown
         parents: interface {{ interface }}
 
-    # - name: Enable interface
-    #   arista.eos.eos_config:
-    #     lines: no shutdown
-    #     parents: interface {{ interface }}
+    - name: Enable interface
+      arista.eos.eos_config:
+        lines: no shutdown
+        parents: interface {{ interface }}
 
     # - name: Check interface status
     #   arista.eos.eos_command:
