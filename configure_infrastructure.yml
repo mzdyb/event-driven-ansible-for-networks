@@ -11,3 +11,5 @@
 
   tasks:
     - debug: var=hostvars[inventory_hostname]
+
+    - debug: var=config_template
