@@ -24,7 +24,7 @@
         event.body[0].values["/network-instances/network-instance/protocols/protocol/bgp/global/networks/network/config/network"] is defined or 
         event.body[0].deletes[0] == "/network-instances/network-instance/protocols/protocol/bgp/global/networks/network"
       throttle:
-        once_within: 60 seconds
+        once_after: 10 seconds
         group_by_attributes:
           - event.body[0].name
       action:
