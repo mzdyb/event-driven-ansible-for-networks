@@ -1,1 +1,2 @@
-# network-eda
+# Ansible and Event-Driven Automation for networks
+This project demonstrates how to use Ansible and Event-Driven Automation for network management and operations. By leveraging an Event-Driven approach we can implement reactive, event-based automation for our networks. This methodology allows for more efficient, responsive, and intelligent network management by automatically reacting to network events in real-time. 
