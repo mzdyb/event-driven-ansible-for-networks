@@ -23,6 +23,10 @@
       condition: >
         event.body[0].values["/network-instances/network-instance/protocols/protocol/bgp/global/networks/network/config/network"] is defined or 
         event.body[0].deletes[0] == "/network-instances/network-instance/protocols/protocol/bgp/global/networks/network"
+      throttle:
+        once_within: 60 seconds
+        group_by_attributes:
+          - event.body[0].name
       action:
         run_job_template:
           name: "Network EDA - enforce bgp network prefix configuration"
