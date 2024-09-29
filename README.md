@@ -19,7 +19,7 @@ In this demo we are observing automatic reaction to the following network events
 2. Any configuration change to network commands in 'router bgp' context in router net01-rtr1
 
 When network event occurs in the network infrastructure it is automatically streamed from network device to gNMIc collector which in turn sends this event to Kafka topic 'network-event' defined on Kafka server.  
-On gNMIc collector we have to configure targets (router in this case), subscriptions (events which we want to receive from targets) and outputs (Kafka server in our case):
+On gNMIc collector we have to configure targets (router net01-rtr1 in our case), subscriptions (events which we want to receive from targets) and outputs (Kafka server in our case):
 ```
 targets:
   net01-rtr1
