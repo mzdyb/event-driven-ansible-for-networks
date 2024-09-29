@@ -19,7 +19,7 @@ In this demo we are observing automatic reaction to the following network events
 2. Any configuration change to network commands in 'router bgp' context in router net01-rtr1
 
 When network event occurs in the network infrastructure it is automatically streamed from network device to gNMIc collector which in turn sends this event to Kafka topic 'network-event' defined on Kafka server.  
-Configuration of gNMIc collector:
+On gNMIc collector we have to configure targets (network devices in this case), subscriptions (events which we want to receive from targets) and outputs (Kafka server in our case):
 ```
 targets:
   net01-rtr1
@@ -35,8 +35,8 @@ outputs:
     (...)
 ```
 
-Ansible Event-driven controler is listening to this Kafka topic using the __source plugin__ and reacts in real-time to the events based on __conditions__ and __actions__ defined in Ansible rulebook 'network-recovery.yml'.  
-There are two important sections in this rulebook:
+Ansible Event-driven controler is listening to the Kafka topic using __source plugin__ and reacts in real-time to the events based on __conditions__ and __actions__ defined in Ansible rulebook 'network-recovery.yml'.  
+There are two main sections in this rulebook:
 1. Sources  
 EDA subscribes to Kafka topic 'network-events' using source plugin 'ansible.eda.kafka':
 ```
@@ -63,7 +63,7 @@ The action in this case is to run Ansible playbooks defined by Job Template in A
 1. Event 'interface_status_change'  
 For this event Ansible Controller runs 'interface_recovery.yml' playbook to 'bounce' the affected port
 2. Event 'bgp_network_prefix_configuration_change'  
-In case of this event device configuration will be automatically reverted to the configuration defined in Source of True (SoT). The important aspect of network infrastructure in this project is that SoT for its network configuration (i.e. the desired state of configuration) is defined in Github. So to recover network from configuration drift we should apply configuration data from Github to the affected network device. To do this Ansible Controller runs 'configure_infrastructure.yml' playbook. To avoid reacting to each individual 'network' command change "throttle' section is defined in the rulebook to wait a defined period of time before trigerring action:
+In case of this event device configuration will be automatically reverted to the configuration defined in Source of True (SoT). The important aspect of network infrastructure in this project is that SoT for its network configuration (i.e. the desired state of configuration) is defined in Github. So to recover network from configuration drift we should apply configuration data from Github to the affected network device. To do this Ansible Controller runs 'configure_infrastructure.yml' playbook. To avoid reacting to each individual change of 'network' command "throttle' section is defined in the rulebook to wait a defined period of time before trigerring action:
 ```
   throttle:
     once_after: 20 seconds
