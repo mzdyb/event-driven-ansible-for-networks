@@ -63,7 +63,7 @@ The action in this case is to run Ansible playbooks defined by Job Template in A
 1. Event 'interface_status_change'  
 For this event Ansible Controller runs 'interface_recovery.yml' playbook to 'bounce' the affected port
 2. Event 'bgp_network_prefix_configuration_change'  
-In case of this event device configuration will be automatically reverted to the configuration defined in Source of True (SoT). The important aspect of network infrastructure in this project is that SoT for its network configuration (i.e. the desired state of configuration) is defined in Github. So to recover network from configuration drift we should apply configuration data from Github to the affected network device. To do this Ansible Controller runs 'configure_infrastructure.yml' playbook. To avoid reacting to every indyvidual 'network' command change "throttle' section is defined in the rulebook to wait a defined period of time before trigerring action:
+In case of this event device configuration will be automatically reverted to the configuration defined in Source of True (SoT). The important aspect of network infrastructure in this project is that SoT for its network configuration (i.e. the desired state of configuration) is defined in Github. So to recover network from configuration drift we should apply configuration data from Github to the affected network device. To do this Ansible Controller runs 'configure_infrastructure.yml' playbook. To avoid reacting to each individual 'network' command change "throttle' section is defined in the rulebook to wait a defined period of time before trigerring action:
 ```
   throttle:
     once_after: 20 seconds
