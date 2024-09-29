@@ -68,7 +68,7 @@ In case of this event device configuration will be automatically reverted to the
   throttle:
     once_after: 20 seconds
 ```
-It is worth to note that for event 'bgp_network_prefix_configuration_change' action which runs playbook 'configure_infrastructure.yml' will be trigerred twice: the first time as a reaction to change in network and the second time as a reaction to event being result of corrective action itself. The third time is not trigerred because the second run will not introduce any changes so event will not be streamed to Kafka topic.
+It is worth to note that for event 'bgp_network_prefix_configuration_change' the action which runs playbook 'configure_infrastructure.yml' will be trigerred twice: the first time as a reaction to change in network and the second time as a reaction to event being result of corrective action itself. The third time is not trigerred because the second run will not introduce any changes so event will not be streamed to Kafka topic.
 
 
 ## Feedback
