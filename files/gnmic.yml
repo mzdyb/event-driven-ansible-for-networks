@@ -1,0 +1,34 @@
+targets:
+  net01-rtr1:
+    address: 172.100.21.2:6030
+    username: admin
+    password: admin
+    insecure: true
+
+subscriptions:
+  interface_status_change:
+    paths:
+      - "/interfaces/interface[name=Ethernet2]/state/oper-status"
+    stream-mode: on-change
+    encoding: json
+    updates-only:
+
+  bgp_network_prefix_configuration_change:
+    paths:
+      - "/network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/global/networks/network[network=*]/config"
+    stream-mode: on-change
+    encoding: json
+    updates-only:
+
+  #configuration_change:
+  #  paths:
+  #    - "/system/state/last-configuration-timestamp"
+  #  stream-mode: on-change
+  #  encoding: json
+
+outputs:
+  kafka:
+    type: kafka
+    address: 192.168.122.110:9092
+    topic: network-events
+    format: event
