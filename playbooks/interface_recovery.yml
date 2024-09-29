@@ -1,5 +1,5 @@
 ---
-- name: Recover interface on Arista switch
+- name: Recover network interface
   hosts: "{{ device }}"
 
   tasks:
