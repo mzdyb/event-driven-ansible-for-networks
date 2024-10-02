@@ -2,7 +2,8 @@
 - name: Automatic network issues recovery
   hosts: all
   sources:
-    - ansible.eda.kafka:
+    - name: Kafka
+      ansible.eda.kafka:
         host: 192.168.122.110
         port: 9092
         topic: network-events
