@@ -3,10 +3,11 @@
 ---
 - name: Manage network infrastructure with clab
   hosts: labhost
+  become: true
   gather_facts: false
 
   roles:
-    - role: create_infrastructure
+    - role: ../roles/create_infrastructure
       vars:
         mode: deploy
-        topology_file: topologies/net01/net01.clab.yml
+        topology_file: ../topologies/net01/net01.clab.yml
