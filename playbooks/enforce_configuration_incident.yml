@@ -1,0 +1,47 @@
+---
+- name: Manage incident - enforce bgp network prefix configuration 
+  hosts: localhost
+  vars:
+    host: https://dev271481.service-now.com/
+    username: admin
+    password: yDpOvP5$Bn-2
+
+  tasks:
+    - name: Create incident
+      servicenow.itsm.incident:
+        instance:
+          host: "{{ host }}"
+          username: "{{ username }}"
+          password: "{{ password }}"
+        state: new
+        caller: ansible.eda
+        short_description: Bgp network prefix configuration changed
+        description: Bgp network prefix configuration on device {{ device }} has been changed
+        impact: low
+        urgency: low
+      register: new_incident
+      tags: [create_incident, all]
+
+    - name: Update the incident with resolution comments
+      servicenow.itsm.incident:
+        instance:
+          host: "{{ host }}"
+          username: "{{ username }}"
+          password: "{{ password }}"
+        number: "{{ new_incident.record.number }}"
+        state: in_progress
+        other:
+          work_notes: "Bgp network prefix configuration on device {{ device }} has been reverted to reflect SoT configuration"
+      tags: [update_incident, all]
+
+    - name: Close the incident if resolved
+      servicenow.itsm.incident:
+        instance:
+          host: "{{ host }}"
+          username: "{{ username }}"
+          password: "{{ password }}"
+        number: "{{ new_incident.record.number }}"
+        state: closed
+        close_code: "Solution provided"
+        close_notes: "Configuration reverted to SoT"
+      tags: [close_incident, all]
