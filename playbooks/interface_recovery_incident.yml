@@ -1,10 +1,10 @@
 ---
-- name: Manage incident - interface down
+- name: Manage incident - interface recovery
   hosts: localhost
   vars:
     host: https://dev271481.service-now.com/
     username: admin
-    password: yDpOvP5$Bn-2
+    password: yDpOvP5$Bn-2 # default password for temporary demo instance, encrypt or use environment variables if needed
 
   tasks:
     - name: Create incident
