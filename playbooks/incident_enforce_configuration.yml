@@ -1,5 +1,5 @@
 ---
-- name: Manage incident - enforce bgp network prefix configuration 
+- name: Manage incident - enforce bgp network prefix configuration
   hosts: localhost
   vars:
     host: https://dev271481.service-now.com/

@@ -17,6 +17,7 @@
           organization: Default
           job_args:
             extra_vars:
+              event_type: "{{ event.body[0].name }}"
               interface: "{{ event.body[0].tags.interface_name }}"
               device: "{{ event.body[0].tags.source }}"
 
@@ -34,4 +35,5 @@
           organization: Default
           job_args:
             extra_vars:
+              event_type: "{{ event.body[0].name }}"
               device: "{{ event.body[0].tags.source }}"
