@@ -37,6 +37,19 @@
               work_notes: "Bounced interface {{ interface }} and verifying if it still operationally down"
           tags: [update_incident, all]
 
+        - name: Update the incident with comment when recovery failed
+          servicenow.itsm.incident:
+            instance:
+              host: "{{ host }}"
+              username: "{{ username }}"
+              password: "{{ password }}"
+            number: "{{ new_incident.record.number }}"
+            state: in_progress
+            other:
+              work_notes: "Bouncing interface did not solve the issue. Please troubleshoot problem manually"
+          when: lineProtocolStatus == 'down'
+          tags: [update_incident, all]
+
         - name: Close the incident if resolved
           servicenow.itsm.incident:
             instance:
