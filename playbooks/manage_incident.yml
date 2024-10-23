@@ -39,10 +39,16 @@
             state: "{{ 'closed' }}"
             close_code: "{{ 'Solution provided' }}"
             close_notes: "{{ 'Bouncing interface solved the issue, interface ' + interface + ' is up' }}"
-            # other:
-            #   work_notes: |
-            #     {{ 'Bouncing interface did not solve the issue. Please troubleshoot problem manually'
-            #     if int_status_after_recovery == 'down' else 'abcd' }}
+          when: int_status_after_recovery == 'up'
+          tags: [update_incident, all]
+
+        - name: Update incident based on recovery result
+          servicenow.itsm.incident:
+            instance: "{{ servicenow_instance }}"
+            number: "{{ new_incident.record.number }}"
+            other:
+              work_notes: "{{ 'Bouncing interface did not solve the issue. Please troubleshoot problem manually' }} "
+          when: int_status_after_recovery == 'down'
           tags: [update_incident, all]
 
         # - name: Update incident based on recovery result
