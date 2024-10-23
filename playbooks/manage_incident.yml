@@ -2,9 +2,10 @@
 - name: Manage incident
   hosts: localhost
   vars:
-    host: https://dev271481.service-now.com/
-    username: admin
-    password: yDpOvP5$Bn-2 # default password for temporary demo instance, encrypt or use environment variables if needed
+    servicenow_instance:
+      host: https://dev271481.service-now.com/
+      username: admin
+      password: yDpOvP5$Bn-2 # default password for temporary demo instance, encrypt or use environment variables if needed
 
   tasks:
     - name: Manage incident - interface recovery
@@ -12,94 +13,62 @@
       block:
         - name: Create incident
           servicenow.itsm.incident:
-            instance:
-              host: "{{ host }}"
-              username: "{{ username }}"
-              password: "{{ password }}"
+            instance: "{{ servicenow_instance }}"
             state: new
             caller: ansible.eda
             short_description: Interface down
-            # description: Interface {{ interface }} on device {{ device }} is operationally down
+            description: Interface {{ interface }} on device {{ device }} is operationally down
             impact: low
             urgency: low
           register: new_incident
           tags: [create_incident, all]
 
-        - name: Update the incident with resolution comments
+        - name: Update incident with recovery attempt
           servicenow.itsm.incident:
-            instance:
-              host: "{{ host }}"
-              username: "{{ username }}"
-              password: "{{ password }}"
+            instance: "{{ servicenow_instance }}"
             number: "{{ new_incident.record.number }}"
             state: in_progress
             other:
-              work_notes: "Bounced interface {{ interface }} and verifying if it still operationally down"
+              work_notes: "Bounced interface {{ interface }} and verifying operational status"
           tags: [update_incident, all]
 
-        - name: Update the incident with comment when recovery failed
+        - name: Update incident based on recovery result
           servicenow.itsm.incident:
-            instance:
-              host: "{{ host }}"
-              username: "{{ username }}"
-              password: "{{ password }}"
+            instance: "{{ servicenow_instance }}"
             number: "{{ new_incident.record.number }}"
-            state: in_progress
+            state: "{{ 'closed' if int_status_after_recovery == 'up' else 'in_progress' }}"
+            close_code: "{{ 'Solution provided' if int_status_after_recovery == 'up' else omit }}"
+            close_notes: "{{ 'Bouncing interface solved the issue, interface ' + interface + ' is up' if int_status_after_recovery == 'up' else omit }}"
             other:
-              work_notes: "Bouncing interface did not solve the issue. Please troubleshoot problem manually"
-          when: lineProtocolStatus == 'down'
+              work_notes: |
+                {{ 'Bouncing interface did not solve the issue. Please troubleshoot problem manually'
+                if int_status_after_recovery == 'down' else omit }}
           tags: [update_incident, all]
 
-        - name: Close the incident if resolved
+    - name: Manage incident - enforce bgp network prefix configuration
+      when: event_type == 'bgp_network_prefix_configuration_change'
+      block:
+        - name: Create incident
           servicenow.itsm.incident:
-            instance:
-              host: "{{ host }}"
-              username: "{{ username }}"
-              password: "{{ password }}"
+            instance: "{{ servicenow_instance }}"
+            state: new
+            caller: ansible.eda
+            short_description: Bgp network prefix configuration on device {{ device }} changed
+            description: Bgp network prefix configuration on device {{ device }} has been changed. Configuration will be reverted to the Source of Truth (SoT)
+            impact: low
+            urgency: low
+          register: new_incident
+          tags: [create_incident, all]
+
+        - name: Update incident with resolution
+          servicenow.itsm.incident:
+            instance: "{{ servicenow_instance }}"
             number: "{{ new_incident.record.number }}"
             state: closed
             close_code: "Solution provided"
-            close_notes: "Bouncing interface solved the issue, interface {{ interface }} is up"
-          tags: [close_incident, all]
-
-    # - name: Manage incident - enforce bgp network prefix configuration
-    #   when: event_type == 'bgp_network_prefix_configuration_change'
-    #   block:
-    #     - name: Create incident
-    #       servicenow.itsm.incident:
-    #         instance:
-    #           host: "{{ host }}"
-    #           username: "{{ username }}"
-    #           password: "{{ password }}"
-    #         state: new
-    #         caller: ansible.eda
-    #         short_description: Bgp network prefix configuration changed
-    #         description: Bgp network prefix configuration on device {{ device }} has been changed
-    #         impact: low
-    #         urgency: low
-    #       register: new_incident
-    #       tags: [create_incident, all]
-
-    #     - name: Update the incident with resolution comments
-    #       servicenow.itsm.incident:
-    #         instance:
-    #           host: "{{ host }}"
-    #           username: "{{ username }}"
-    #           password: "{{ password }}"
-    #         number: "{{ new_incident.record.number }}"
-    #         state: in_progress
-    #         other:
-    #           work_notes: "Bgp network prefix configuration on device {{ device }} has been reverted to reflect SoT configuration"
-    #       tags: [update_incident, all]
-
-    #     - name: Close the incident if resolved
-    #       servicenow.itsm.incident:
-    #         instance:
-    #           host: "{{ host }}"
-    #           username: "{{ username }}"
-    #           password: "{{ password }}"
-    #         number: "{{ new_incident.record.number }}"
-    #         state: closed
-    #         close_code: "Solution provided"
-    #         close_notes: "Configuration reverted to SoT"
-    #       tags: [close_incident, all]
+            close_notes: "BGP network prefix configuration reverted to SoT on device {{ device }}"
+            other:
+              work_notes: >
+                BGP network prefix configuration on device {{ device }} has been
+                successfully reverted to reflect the Source of Truth (SoT) configuration.
+          tags: [update_incident, all]

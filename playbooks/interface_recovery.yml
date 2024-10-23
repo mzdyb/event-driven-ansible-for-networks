@@ -18,32 +18,28 @@
         lines: no shutdown
         parents: interface {{ interface }}
 
-    - name: Check interface line protocol status
+    - name: Check interface status
       arista.eos.eos_command:
         commands:
           - command: show ip interface {{ interface }} brief
             output: json
       register: interface_status
 
-    - ansible.builtin.set_fact:
-        lineProtocolStatus: "{{ interface_status.stdout_lines[0].interfaces[interface].lineProtocolStatus }}"
+    - name: Set variable with interface line protocol status
+      ansible.builtin.set_fact:
+         line_protocol_status: "{{ interface_status.stdout_lines[0].interfaces[interface].lineProtocolStatus }}"
 
     - name: Pass status in workflow
       ansible.builtin.set_stats:
         data:
-          int_status_after_recovery: lineProtocolStatus
-
-    # - name: Pass status in workflow
-    #   ansible.builtin.set_stats:
-    #     data:
-    #       lineProtocolStatus: "{{ interface_status.stdout_lines[0].interfaces[interface].lineProtocolStatus }}"
+          int_status_after_recovery:  line_protocol_status
 
     - name: Show interface status
       ansible.builtin.debug:
-        var: lineProtocolStatus
+        var:  line_protocol_status
   
     - name: Verify if interface recovered
       ansible.builtin.assert:
-        that: lineProtocolStatus == "up"
+        that:  line_protocol_status == "up"
         fail_msg: "Interface {{ interface }} recovery failed"
         success_msg: "Interface {{ interface }} recovered successfully"
