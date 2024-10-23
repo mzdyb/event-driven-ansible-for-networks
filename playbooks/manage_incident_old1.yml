@@ -32,7 +32,7 @@
               work_notes: "Bounced interface {{ interface }} and verifying operational status"
           tags: [update_incident, all]
 
-        - name: Update incident when recovery succesfull
+        - name: Update incident based on recovery result
           servicenow.itsm.incident:
             instance: "{{ servicenow_instance }}"
             number: "{{ new_incident.record.number }}"
@@ -40,9 +40,9 @@
             close_code: 'Solution provided'
             close_notes: "{{ 'Bouncing interface solved the issue, interface ' + interface + ' is up' }}"
           when: int_status_after_recovery == 'up'
-          tags: [update_incident_succesfull, all]
+          tags: [update_incident, all]
 
-        - name: Update incident when recovery unuccesfull
+        - name: Update incident based on recovery result
           servicenow.itsm.incident:
             instance: "{{ servicenow_instance }}"
             number: "{{ new_incident.record.number }}"
@@ -50,7 +50,20 @@
             other:
               work_notes: "{{ 'Bouncing interface did not solve the issue. Please troubleshoot problem manually' }} "
           when: int_status_after_recovery == 'down'
-          tags: [update_incident_unsuccesfull, all]
+          tags: [update_incident, all]
+
+        # - name: Update incident based on recovery result
+        #   servicenow.itsm.incident:
+        #     instance: "{{ servicenow_instance }}"
+        #     number: "{{ new_incident.record.number }}"
+        #     state: "{{ 'closed' if int_status_after_recovery == 'up' else 'in_progress' }}"
+        #     close_code: "{{ 'Solution provided' if int_status_after_recovery == 'up' else omit }}"
+        #     close_notes: "{{ 'Bouncing interface solved the issue, interface ' + interface + ' is up' if int_status_after_recovery == 'up' else omit }}"
+        #     other:
+        #       work_notes: |
+        #         {{ 'Bouncing interface did not solve the issue. Please troubleshoot problem manually'
+        #         if int_status_after_recovery == 'down' else 'abcd' }}
+        #   tags: [update_incident, all]
 
     - name: Manage incident - enforce bgp network prefix configuration
       when: event_type == 'bgp_network_prefix_configuration_change'
@@ -78,4 +91,4 @@
               work_notes: >
                 BGP network prefix configuration on device {{ device }} has been
                 successfully reverted to reflect the Source of Truth (SoT) configuration.
-          tags: [update_incident_succesfull, all]
+          tags: [update_incident, all]
