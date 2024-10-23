@@ -3,49 +3,43 @@
   hosts: "{{ device }}"
 
   tasks:
-    - name: Recover interface
-      block:
-        - name: Shut down interface
-          arista.eos.eos_config:
-            lines:
-              - shutdown
-            parents: interface {{ interface }}
+    - name: Shut down interface
+      arista.eos.eos_config:
+        lines:
+          - shutdown
+        parents: interface {{ interface }}
 
-        - name: Pause for 5 seconds
-          ansible.builtin.pause:
-            seconds: 5
+    - name: Pause for 5 seconds
+      ansible.builtin.pause:
+        seconds: 5
 
-        - name: Enable interface
-          arista.eos.eos_config:
-            lines: no shutdown
-            parents: interface {{ interface }}
+    - name: Enable interface
+      arista.eos.eos_config:
+        lines: no shutdown
+        parents: interface {{ interface }}
 
-        - name: Check interface status
-          arista.eos.eos_command:
-            commands:
-              - command: show ip interface {{ interface }} brief
-                output: json
-          register: interface_status
+    - name: Check interface status
+      arista.eos.eos_command:
+        commands:
+          - command: show ip interface {{ interface }} brief
+            output: json
+      register: interface_status
 
-        - name: Extract interface line protocol status
-          ansible.builtin.set_fact:
-             line_protocol_status: "{{ interface_status.stdout_lines[0].interfaces[interface].lineProtocolStatus }}"
+    - name: Extract interface line protocol status
+      ansible.builtin.set_fact:
+         line_protocol_status: "{{ interface_status.stdout_lines[0].interfaces[interface].lineProtocolStatus }}"
 
-        - name: Pass status in workflow
-          ansible.builtin.set_stats:
-            data:
-              int_status_after_recovery:  line_protocol_status
+    - name: Pass status in workflow
+      ansible.builtin.set_stats:
+        data:
+          int_status_after_recovery:  line_protocol_status
 
-        - name: Display final interface status
-          ansible.builtin.debug:
-            msg: "Interface {{ interface }} status: {{ line_protocol_status }}"
-         
-        - name: Verify interface recovery
-          ansible.builtin.assert:
-            that:  line_protocol_status == "up"
-            success_msg: "Interface {{ interface }} recovered successfully"
-
-      rescue:
-        - name: Inform about recovery failure
-          ansible.builtin.debug:
-            msg: "Interface {{ interface }} recovery failed"
+    - name: Display final interface status
+      ansible.builtin.debug:
+        msg: "Interface {{ interface }} status: {{ line_protocol_status }}"
+     
+    - name: Verify interface recovery to invoke proper job in workflow template
+      ansible.builtin.assert:
+        that:  line_protocol_status == "up"
+        success_msg: "Interface {{ interface }} recovered successfully"
+        fail_msg: "Interface {{ interface }} recovery failed"

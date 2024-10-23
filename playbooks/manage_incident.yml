@@ -30,7 +30,7 @@
             state: in_progress
             other:
               work_notes: "Bounced interface {{ interface }} and verifying operational status"
-          tags: [update_incident, all]
+          tags: [update_incident_succesfull, update_incident_unsuccesfull, all]
 
         - name: Update incident when recovery succesfull
           servicenow.itsm.incident:
