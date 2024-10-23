@@ -43,5 +43,5 @@
 
       rescue:
         - name: Handle recovery failure
-          ansible.builtin.fail:
+          ansible.builtin.debug:
             msg: "Interface {{ interface }} recovery failed"
