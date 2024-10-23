@@ -13,7 +13,7 @@
       condition: event.body[0].values["/interfaces/interface/state/oper-status"] == "DOWN"
       action:
         run_workflow_template:
-          name: "Network EDA - interface recovery"
+          name: "Network EDA - interface status change"
           organization: Default
           job_args:
             extra_vars:
@@ -21,19 +21,19 @@
               interface: "{{ event.body[0].tags.interface_name }}"
               device: "{{ event.body[0].tags.source }}"
 
-    - name: Enforce bgp network prefix configuration
-      condition: >
-        event.body[0].values["/network-instances/network-instance/protocols/protocol/bgp/global/networks/network/config/network"] is defined or
-        event.body[0].deletes[0] == "/network-instances/network-instance/protocols/protocol/bgp/global/networks/network"
-      throttle:
-        once_after: 20 seconds
-        group_by_attributes:
-          - event.body[0].name
-      action:
-        run_workflow_template:
-          name: "Network EDA - enforce bgp network prefix configuration"
-          organization: Default
-          job_args:
-            extra_vars:
-              event_type: "{{ event.body[0].name }}"
-              device: "{{ event.body[0].tags.source }}"
+    # - name: Enforce bgp network prefix configuration
+    #   condition: >
+    #     event.body[0].values["/network-instances/network-instance/protocols/protocol/bgp/global/networks/network/config/network"] is defined or
+    #     event.body[0].deletes[0] == "/network-instances/network-instance/protocols/protocol/bgp/global/networks/network"
+    #   throttle:
+    #     once_after: 20 seconds
+    #     group_by_attributes:
+    #       - event.body[0].name
+    #   action:
+    #     run_workflow_template:
+    #       name: "Network EDA - enforce bgp network prefix configuration"
+    #       organization: Default
+    #       job_args:
+    #         extra_vars:
+    #           event_type: "{{ event.body[0].name }}"
+    #           device: "{{ event.body[0].tags.source }}"
