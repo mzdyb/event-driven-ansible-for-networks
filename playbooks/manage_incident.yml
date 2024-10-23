@@ -83,11 +83,7 @@
             number: "{{ new_incident.record.number }}"
             state: closed
             close_code: "Solution provided"
-            close_notes: "BGP network prefix configuration reverted to SoT on device {{ device }}"
-            other:
-              work_notes: >
-                BGP network prefix configuration on device {{ device }} has been
-                successfully reverted to reflect (SoT) configuration.
+            close_notes: "Configuration on device {{ device }} has been successfully reverted to reflect SoT configuration."
           tags: [update_incident_succesfull, all]
 
         - name: Update incident when recovery unuccesfull
