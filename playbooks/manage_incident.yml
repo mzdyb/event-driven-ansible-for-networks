@@ -36,14 +36,27 @@
           servicenow.itsm.incident:
             instance: "{{ servicenow_instance }}"
             number: "{{ new_incident.record.number }}"
-            state: "{{ 'closed' if int_status_after_recovery == 'up' else 'in_progress' }}"
-            close_code: "{{ 'Solution provided' if int_status_after_recovery == 'up' else omit }}"
-            close_notes: "{{ 'Bouncing interface solved the issue, interface ' + interface + ' is up' if int_status_after_recovery == 'up' else omit }}"
-            other:
-              work_notes: |
-                {{ 'Bouncing interface did not solve the issue. Please troubleshoot problem manually'
-                if int_status_after_recovery == 'down' else 'abcd' }}
+            state: "{{ 'closed' }}"
+            close_code: "{{ 'Solution provided' }}"
+            close_notes: "{{ 'Bouncing interface solved the issue, interface ' + interface + ' is up' }}"
+            # other:
+            #   work_notes: |
+            #     {{ 'Bouncing interface did not solve the issue. Please troubleshoot problem manually'
+            #     if int_status_after_recovery == 'down' else 'abcd' }}
           tags: [update_incident, all]
+
+        # - name: Update incident based on recovery result
+        #   servicenow.itsm.incident:
+        #     instance: "{{ servicenow_instance }}"
+        #     number: "{{ new_incident.record.number }}"
+        #     state: "{{ 'closed' if int_status_after_recovery == 'up' else 'in_progress' }}"
+        #     close_code: "{{ 'Solution provided' if int_status_after_recovery == 'up' else omit }}"
+        #     close_notes: "{{ 'Bouncing interface solved the issue, interface ' + interface + ' is up' if int_status_after_recovery == 'up' else omit }}"
+        #     other:
+        #       work_notes: |
+        #         {{ 'Bouncing interface did not solve the issue. Please troubleshoot problem manually'
+        #         if int_status_after_recovery == 'down' else 'abcd' }}
+        #   tags: [update_incident, all]
 
     - name: Manage incident - enforce bgp network prefix configuration
       when: event_type == 'bgp_network_prefix_configuration_change'
