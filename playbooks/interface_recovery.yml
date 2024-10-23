@@ -32,7 +32,7 @@
     - name: Pass status in workflow
       ansible.builtin.set_stats:
         data:
-          int_status_after_recovery:  line_protocol_status
+          int_status_after_recovery:  "{{ line_protocol_status }}"
 
     - name: Display final interface status
       ansible.builtin.debug:
