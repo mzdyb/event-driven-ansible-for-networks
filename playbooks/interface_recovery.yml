@@ -26,12 +26,12 @@
       register: interface_status
 
     - ansible.builtin.set_fact:
-        lineProtocolStatus: interface_status.stdout_lines[0].interfaces[interface].lineProtocolStatus
+        lineProtocolStatus: "{{ interface_status.stdout_lines[0].interfaces[interface].lineProtocolStatus }}"
 
     - name: Pass status in workflow
       ansible.builtin.set_stats:
         data:
-          int_status_after_recovery: "{{ lineProtocolStatus }}"
+          int_status_after_recovery: lineProtocolStatus
 
     # - name: Pass status in workflow
     #   ansible.builtin.set_stats:
