@@ -27,7 +27,7 @@
         event.body[0].deletes[0] == "/network-instances/network-instance/protocols/protocol/bgp/global/networks/network"
       throttle:
         once_after: 20 seconds
-        once_within: 90 seconds
+        once_within: 60 seconds
         group_by_attributes:
           - event.body[0].name
       action:
