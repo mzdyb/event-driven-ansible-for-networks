@@ -42,7 +42,7 @@
             other:
               work_notes: |
                 {{ 'Bouncing interface did not solve the issue. Please troubleshoot problem manually'
-                if int_status_after_recovery == 'down' else omit }}
+                if int_status_after_recovery == 'down' else 'abcd' }}
           tags: [update_incident, all]
 
     - name: Manage incident - enforce bgp network prefix configuration
