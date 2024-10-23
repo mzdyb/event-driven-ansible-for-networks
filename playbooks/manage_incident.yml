@@ -26,7 +26,8 @@
         - name: Pass incident number in workflow
           ansible.builtin.set_stats:
             data:
-              new_incident1: "{{ new_incident }}"
+              new_incident: new_incident
+          tags: [create_incident, all]
 
         - name: Update incident with recovery attempt
           servicenow.itsm.incident:
