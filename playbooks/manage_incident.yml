@@ -45,7 +45,6 @@
             state: closed
             close_code: 'Solution provided'
             close_notes: "{{ 'Bouncing interface solved the issue, interface ' + interface + ' is up' }}"
-          when: int_status_after_recovery == 'up'
           tags: [update_incident_succesfull, all]
 
         - name: Update incident when recovery unuccesfull
@@ -55,7 +54,6 @@
             state: in_progress
             other:
               work_notes: "{{ 'Bouncing interface did not solve the issue. Please troubleshoot problem manually' }} "
-          when: int_status_after_recovery == 'down'
           tags: [update_incident_unsuccesfull, all]
 
     - name: Manage incident - enforce bgp network prefix configuration
@@ -73,7 +71,7 @@
           register: new_incident
           tags: [create_incident, all]
 
-        - name: Update incident with resolution
+        - name: Update incident when recovery succesfull
           servicenow.itsm.incident:
             instance: "{{ servicenow_instance }}"
             number: "{{ new_incident.record.number }}"
@@ -85,3 +83,13 @@
                 BGP network prefix configuration on device {{ device }} has been
                 successfully reverted to reflect the Source of Truth (SoT) configuration.
           tags: [update_incident_succesfull, all]
+
+        - name: Update incident when recovery unuccesfull
+          servicenow.itsm.incident:
+            instance: "{{ servicenow_instance }}"
+            number: "{{ new_incident.record.number }}"
+            state: in_progress
+            other:
+              work_notes: "{{ 'Reverting configuration to the Source of Truth (SoT) failed. Please troubleshoot problem manually' }} "
+          when: int_status_after_recovery == 'down'
+          tags: [update_incident_unsuccesfull, all]

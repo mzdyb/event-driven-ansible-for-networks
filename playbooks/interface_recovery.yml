@@ -29,16 +29,11 @@
       ansible.builtin.set_fact:
          line_protocol_status: "{{ interface_status.stdout_lines[0].interfaces[interface].lineProtocolStatus }}"
 
-    - name: Pass status in workflow
-      ansible.builtin.set_stats:
-        data:
-          int_status_after_recovery:  "{{ line_protocol_status }}"
-
     - name: Display final interface status
       ansible.builtin.debug:
         msg: "Interface {{ interface }} status: {{ line_protocol_status }}"
      
-    - name: Verify interface recovery to invoke proper job in workflow template
+    - name: Set recovery status for workflow
       ansible.builtin.assert:
         that:  line_protocol_status == "up"
         success_msg: "Interface {{ interface }} recovered successfully"
