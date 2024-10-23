@@ -87,7 +87,7 @@
             other:
               work_notes: >
                 BGP network prefix configuration on device {{ device }} has been
-                successfully reverted to reflect the Source of Truth (SoT) configuration.
+                successfully reverted to reflect (SoT) configuration.
           tags: [update_incident_succesfull, all]
 
         - name: Update incident when recovery unuccesfull
