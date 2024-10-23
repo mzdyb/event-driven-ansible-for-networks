@@ -29,6 +29,7 @@
         once_after: 20 seconds
         group_by_attributes:
           - event.body[0].name
+        once_within: 90 seconds
       action:
         run_workflow_template:
           name: "Network EDA - bgp network prefix configuration change"
