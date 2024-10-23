@@ -37,7 +37,7 @@
     - name: Pass status in workflow
       ansible.builtin.set_stats:
         data:
-          lineProtocolStatus: interface_status.stdout_lines[0].interfaces[interface].lineProtocolStatus
+          lineProtocolStatus: "{{ interface_status.stdout_lines[0].interfaces[interface].lineProtocolStatus }}"
 
     - name: Show interface status
       ansible.builtin.debug:
