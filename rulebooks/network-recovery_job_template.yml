@@ -30,7 +30,7 @@
           - event.body[0].name
       action:
         run_job_template:
-          name: "Network EDA - enforce bgp network prefix configuration"
+          name: "Network EDA - enforce configuration from SoT"
           organization: Default
           job_args:
             extra_vars:
