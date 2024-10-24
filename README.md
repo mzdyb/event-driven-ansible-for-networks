@@ -86,10 +86,9 @@ To avoid reacting to each individual change with 'network' command and to recove
   throttle:
     once_after: 20 seconds
     once_within: 60 seconds
-```
-
->>>Example when recovery action completed succesfully:  
-      ![alt text](files/bgp_recovery_succesfull.png)
+```   
+  Example when recovery action for bgp configuration change completed succesfully:  
+    ![alt text](files/bgp_recovery_succesfull.png)
 
 ## Remarks
 In this scenario I am using streaming telemetry which is a modern approach to collecting real-time network performance data. For this purpose gNMIc collector and Kafka broker are used. However other mechanisms for real-time transmission of network-related events to an EDA controller can also be employed such as a syslog server. An example of using syslog for Event-Driven Ansible can be found in the following project: [Automating multivendor networks](https://github.com/mzdyb/automating-mutivendor-networks/)  
