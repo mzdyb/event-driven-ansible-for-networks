@@ -30,21 +30,7 @@ subscriptions:
   (...)
   bgp_network_prefix_configuration_change:
   (...)
-outputs:
-  kafka:
-    topic: network-events
-    (...)
-```
-
-Ansible Event-driven controler is listening to the Kafka topic using __source plugin__ and reacts in real-time to the events based on __conditions__ and __actions__ defined in Ansible rulebook 'network-recovery.yml'.  
-There are two main sections in this rulebook:
-1. Sources  
-EDA subscribes to Kafka topic 'network-events' using source plugin 'ansible.eda.kafka':
-```
-  sources:
-    - ansible.eda.kafka:
-        host: 192.168.122.110
-        port: 9092
+outputs: event-based automation
         topic: network-events
 ```
 
@@ -91,8 +77,10 @@ To avoid reacting to each individual change with 'network' command and to recove
     ![alt text](files/bgp_recovery_succesfull.png)
 
 ## Remarks
-In this scenario I am using streaming telemetry which is a modern approach to collecting real-time network performance data. For this purpose gNMIc collector and Kafka broker are used. However other mechanisms for real-time transmission of network-related events to an EDA controller can also be employed such as a syslog server. An example of using syslog for Event-Driven Ansible can be found in the following project: [Automating multivendor networks](https://github.com/mzdyb/automating-mutivendor-networks/)  
+In this scenario I am using streaming telemetry which is a modern approach to collecting real-time network performance data. For this purpose gNMIc collector and Kafka broker are used. However other mechanisms for real-time transmission of network-related events to an EDA controller can also be employed such as a syslog server. An example of using syslog for Event-Driven Ansible can be found in the following project:  
+[Automating multivendor networks](https://github.com/mzdyb/automating-mutivendor-networks/)  
 
+This project provides examples of event-based automation for networks but the same logic can be applied to any other IT domain as long as there is a way to send events from our systems to the Event-Driven Ansible controller.
 
 ## Feedback
 Feedback is always welcome! If you have any comments, please reach me out
