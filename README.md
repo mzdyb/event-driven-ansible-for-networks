@@ -80,7 +80,7 @@ To avoid reacting to each individual change with 'network' command and to recove
 In this scenario I am using streaming telemetry which is a modern approach to collecting real-time network performance data. For this purpose gNMIc collector and Kafka broker are used. However other mechanisms for real-time transmission of network-related events to an EDA controller can also be employed such as a syslog server. An example of using syslog for Event-Driven Ansible can be found in the following project:  
 [Automating multivendor networks](https://github.com/mzdyb/automating-mutivendor-networks/)  
 
-This project provides examples of event-based automation for networks but the same logic can be applied to any other IT domain as long as there is a way to send events from our systems to the Event-Driven Ansible controller.
+This scenario provides examples of event-based automation for networks but the same logic can be applied to any other IT domain as long as there is a way to send events from our systems to the Event-Driven Ansible controller.
 
 ## Feedback
 Feedback is always welcome! If you have any comments, please reach me out
