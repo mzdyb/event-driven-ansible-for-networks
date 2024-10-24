@@ -30,8 +30,11 @@ subscriptions:
   (...)
   bgp_network_prefix_configuration_change:
   (...)
-outputs: event-based automation
-        topic: network-events
+outputs:
+  kafka:
+    type: kafka
+    topic: network-events
+  (...)
 ```
 
 2. Rules  
