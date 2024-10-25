@@ -37,8 +37,7 @@ outputs:
   (...)
 ```
 
-2. Rules  
-EDA invokes actions based on conditions related to the event:
+When event reaches Kafka topic 'network'events' EDA receives this event from Kafka using source plugin and automatically invokes actions based on conditions related to the event. These conditions are actions are described in rulebook:
 ```
   rules:
     - name: Interface recovery
@@ -50,7 +49,7 @@ EDA invokes actions based on conditions related to the event:
 ```
 ## Automation Workflows
 
-It our rulebook the action is to run Ansible playbooks defined by Workflow Templates in Ansible Controller. The approach with Workflow Templates is called _**Push of the button automation**_ as it allows to create sophisticated automation logic and to run it by just clicking "Run" button in the Workflow. Here Workflows are automatically triggered by EDA controller. Based on type of the event two automation workflows are defined:  
+In our rulebook the action is to run Ansible playbooks defined by Workflow Templates in Ansible Controller. The approach with Workflow Templates is called _**Push of the button automation**_ as it allows to create sophisticated automation logic and to run it by just clicking "Run" button in the Workflow. Here Workflows are automatically triggered by EDA controller. Based on type of the event two automation workflows are defined:  
 1. Event 'interface_status_change'  
 ![alt text](files/interface_status_change_workflow.png)  
 Ansible Controller runs the following jobs (playbooks):
