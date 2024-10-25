@@ -37,7 +37,7 @@ outputs:
   (...)
 ```
 
-When event reaches Kafka topic 'network-events' EDA receives this event from Kafka using source plugin and automatically invokes actions based on conditions related to the event. These conditions are actions are described in rulebook:
+When event reaches Kafka topic 'network-events' EDA receives this event from Kafka using source plugin and automatically invokes actions based on conditions related to the event. These conditions and actions are described in rulebook:
 ```
   rules:
     - name: Interface recovery
