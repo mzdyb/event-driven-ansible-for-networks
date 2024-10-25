@@ -37,7 +37,7 @@ outputs:
   (...)
 ```
 
-When event reaches Kafka topic 'network'events' EDA receives this event from Kafka using source plugin and automatically invokes actions based on conditions related to the event. These conditions are actions are described in rulebook:
+When event reaches Kafka topic 'network-events' EDA receives this event from Kafka using source plugin and automatically invokes actions based on conditions related to the event. These conditions are actions are described in rulebook:
 ```
   rules:
     - name: Interface recovery
@@ -69,7 +69,7 @@ Below we can see an example of actions recorded in SeviceNow incident:
 2. Event 'bgp_network_prefix_configuration_change'  
 ![alt text](files/bgp_network_configuration_change_workflow.png)  
 Here we have similar automation jobs in the Workflow like for the first event with the difference in the recovery action. In case of this event device configuration will be automatically reverted to the configuration defined in Source of True (SoT). The important aspect of network infrastructure in this project is that SoT for its network configuration (i.e. the desired state of configuration) is defined in Github. So to recover network from configuration drift we should apply configuration data from Github to the affected network device. To do this Ansible Controller runs 'configure_infrastructure.yml' playbook.  
-To avoid reacting to each individual change with 'network' command and to recovery action itself the "throttle' section is defined in the rulebook to wait for a defined period of time before and after trigerring the action:
+To avoid reacting to each individual change with 'network' command and to recovery action itself the 'throttle' section is defined in the rulebook to wait for a defined period of time before and after trigerring the action:
 ```
   throttle:
     once_after: 20 seconds
