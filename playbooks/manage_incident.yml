@@ -2,9 +2,10 @@
 - name: Manage incident
   hosts: localhost
   vars:
-    host: "{{ lookup('ansible.builtin.env', 'SN_HOST') }}"
-    username: "{{ lookup('ansible.builtin.env', 'SN_USERNAME') }}"
-    password: "{{ lookup('ansible.builtin.env', 'SN_PASSWORD') }}"
+    servicenow_instance:
+      host: "{{ lookup('ansible.builtin.env', 'SN_HOST') }}"
+      username: "{{ lookup('ansible.builtin.env', 'SN_USERNAME') }}"
+      password: "{{ lookup('ansible.builtin.env', 'SN_PASSWORD') }}"
     # servicenow_instance:
     #   host: "{{ sn_host }}"
     #   username: "{{ sn_username }}"
