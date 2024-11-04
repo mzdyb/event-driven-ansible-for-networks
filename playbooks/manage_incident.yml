@@ -3,7 +3,7 @@
   hosts: localhost
   vars:
     servicenow_instance:
-      host: https://dev271481.service-now.com/
+      host: "{{ instance_url }}"
       username: "{{ username }}"
       password: "{{ password }}" # default password for temporary demo instance, encrypt or use environment variables if needed
 
