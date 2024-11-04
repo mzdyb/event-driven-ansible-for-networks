@@ -2,10 +2,13 @@
 - name: Manage incident
   hosts: localhost
   vars:
-    servicenow_instance:
-      host: "{{ instance_url }}"
-      username: "{{ instance_username }}"
-      password: "{{ instance_password }}"
+    host: "{{ lookup('ansible.builtin.env', 'SN_HOST') }}"
+    username: "{{ lookup('ansible.builtin.env', 'SN_USERNAME') }}"
+    password: "{{ lookup('ansible.builtin.env', 'SN_PASSWORD') }}"
+    # servicenow_instance:
+    #   host: "{{ sn_host }}"
+    #   username: "{{ sn_username }}"
+    #   password: "{{ sn_password }}"
 
   tasks:
     - name: Manage incident - interface recovery

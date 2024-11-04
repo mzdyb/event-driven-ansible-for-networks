@@ -1,0 +1,21 @@
+---
+- name: Manage incident
+  hosts: localhost
+  vars:
+    servicenow_instance:
+      host: 'https://dev259089.service-now.com/'
+      username: admin
+      password: Bo+MWci=gP48
+
+  tasks:
+    - name: Create incident
+      servicenow.itsm.incident:
+        instance: "{{ servicenow_instance }}"
+        state: new
+        caller: ansible.eda
+        short_description: Interface down
+        description: Interface is operationally down
+        impact: low
+        urgency: low
+      register: new_incident
+      tags: [create_incident, all]
