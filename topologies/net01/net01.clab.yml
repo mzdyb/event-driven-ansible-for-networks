@@ -24,6 +24,29 @@ topology:
         - ip addr add 192.168.1.2/24 dev eth1
         - ip route add 192.168.2.0/24 via 192.168.1.1
 
+    gnmic:
+      kind: linux
+      image: ghcr.io/openconfig/gnmic:latest
+      binds:
+        - .gnmic.yml:/app/gnmic.yml:ro
+        - /var/run/docker.sock:/var/run/docker.sock
+      cmd: '--config /app/gnmic.yml --log subscribe'        
+
+    kafka-server:
+      kind: linux
+      image: bitnami/kafka:latest
+      ports:
+        - 9092:9092
+        - 9093:9093
+      env:
+        KAFKA_CFG_NODE_ID: 0
+        KAFKA_CFG_PROCESS_ROLES: controller,broker
+        KAFKA_CFG_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093
+        KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+        KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: 0@clab-net1-kafka-server:9093
+        KAFKA_CFG_CONTROLLER_LISTENER_NAMES: CONTROLLER
+        KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://192.168.122.110:9092
+
   links:
     - endpoints: ["net1-rtr1:eth1", "net1-rtr2:eth1"]
     - endpoints: ["net1-rtr1:eth2", "net1-client1:eth1"]
