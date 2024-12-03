@@ -4,7 +4,7 @@
   sources:
     - name: Kafka
       ansible.eda.kafka:
-        host: 192.168.122.110
+        host: 192.168.130.30
         port: 9092
         topic: network-events
 
