@@ -29,6 +29,6 @@ subscriptions:
 outputs:
   kafka:
     type: kafka
-    address: 192.168.122.110:9092
+    address: 192.168.130.30:9092
     topic: network-events
     format: event
