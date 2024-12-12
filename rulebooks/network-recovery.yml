@@ -13,7 +13,7 @@
       condition: event.body[0].values["/interfaces/interface/state/oper-status"] == "DOWN"
       action:
         run_workflow_template:
-          name: "Network EDA - interface status change"
+          name: "EDA for networks - interface status change"
           organization: Default
           job_args:
             extra_vars:
@@ -32,7 +32,7 @@
           - event.body[0].name
       action:
         run_workflow_template:
-          name: "Network EDA - bgp network prefix configuration change"
+          name: "EDA for networks - bgp network prefix configuration change"
           organization: Default
           job_args:
             extra_vars:

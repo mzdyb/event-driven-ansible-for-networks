@@ -13,7 +13,7 @@
       condition: event.body[0].values["/interfaces/interface/state/oper-status"] == "DOWN"
       action:
         run_job_template:
-          name: "Network EDA - interface recovery"
+          name: "EDA for networks - interface recovery"
           organization: Default
           job_args:
             extra_vars:
@@ -30,7 +30,7 @@
           - event.body[0].name
       action:
         run_job_template:
-          name: "Network EDA - enforce configuration from SoT"
+          name: "EDA for networks - enforce configuration from SoT"
           organization: Default
           job_args:
             extra_vars:
