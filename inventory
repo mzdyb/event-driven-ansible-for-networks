@@ -2,7 +2,7 @@
 ungrouped:
   hosts:
     labhost:
-      ansible_host: 192.168.122.110
+      ansible_host: 192.168.130.30
       ansible_user: ansible
       ansible_password: redhat # clear text for demo purposes, passwords should be encrypted with ansible-vault encrypt-string command
       ansible_become_password: redhat   
